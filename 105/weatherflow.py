@@ -3,7 +3,7 @@ from prefect import flow, task
 from prefect.artifacts import create_markdown_artifact
 
 
-@task
+@flow
 def mark_it_down(temp):
     markdown_report = f"""# Weather Report
     
@@ -29,7 +29,13 @@ def fetch_weather(lat: float, lon: float):
         params=dict(latitude=lat, longitude=lon, hourly="temperature_2m"),
     )
     most_recent_temp = float(weather.json()["hourly"]["temperature_2m"][0])
-    mark_it_down(most_recent_temp)
+    return most_recent_temp
+
+
+@flow
+def fetch_parent_flow(lat, lon):
+    temp = fetch_weather(lat, lon)
+    mark_it_down(temp)
 
 
 if __name__ == "__main__":
