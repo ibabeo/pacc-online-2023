@@ -24,7 +24,7 @@ deployments:
     version: null
     tags: []
     description: null
-    entrypoint: pacc-online-2023\105\weatherflow.py:fetch_parent_flow
+    entrypoint: 105\weatherflow.py:fetch_parent_flow
     parameters: {}
     work_pool:
       name: first-work-pool
